@@ -24,12 +24,11 @@ class Deck:
     def show(self):
         self.deck.show()
 
-
-    def deal(self):
-        pass
-        
-    
+    def draw(self):
+        return self.deck.removeTail()
+'''
 a=Deck()
-#a.show()
 a.shuffle()
 a.show()
+print('tail',a.draw())
+'''

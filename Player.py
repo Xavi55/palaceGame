@@ -1,9 +1,11 @@
 from LinkList import LinkList
 class Player:
-    name=''
-    hand=LinkList()
-    hiddenStack=LinkList()
-    shownStack=LinkList()
+    self.name=''
+    self.hand=LinkList()
+    self.hiddenStack=LinkList()
+    self.shownStack=LinkList()
+    self.hasTurn=False
+    self.turnRank=None
 
     def __init__(self,n):
         self.name=name
@@ -16,11 +18,9 @@ class Player:
     def place(self,c):
         self.shownStack.add(c)
 
-    def pickup(self):
-        pass
+    def pickup(self,stack):
+        for i in stack:
+            self.hand.add(i)
 
-    def play():
-        pass
-
-    def draw():
-        pass    
+    def play(self,card):
+        return self.hand.removeAt(card)
