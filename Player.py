@@ -1,16 +1,15 @@
 from LinkList import LinkList
 class Player:
-    self.name=''
-    self.hand=LinkList()
-    self.hiddenStack=LinkList()
-    self.shownStack=LinkList()
-    self.hasTurn=False
-    self.turnRank=None
-
     def __init__(self,n):
-        self.name=name
+        #use `self` to attach variable to this player
+        #otherwise its like a static variable
+        #every inst of player points to the same variable/memory
+        self.name=n
+        self.hand=LinkList()
+        self.hiddenStack=LinkList()
+        self.shownStack=LinkList()
+        self.hasTurn=False
 
-    #choose 3 cards to hide
     def hide(self,c):
         self.hiddenStack.add(c)
     

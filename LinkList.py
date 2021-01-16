@@ -87,6 +87,7 @@ class LinkList:
             if s is 1:
                 temp=self.head.val
                 self.head=None
+                self.length=0
                 return temp
             else:
                 return self.removeAt(self.length-1)
