@@ -3,6 +3,7 @@ class Node:
         self.val=val
         self.next=None
 
+#fi-fo linklist ... like a stack for the deck...
 class LinkList:
     def __init__(self):
         self.head=None
@@ -14,19 +15,15 @@ class LinkList:
             self.head=new
             self.length+=1
         else:
-            curr=self.head
-            while curr.next!=None:
-                curr=curr.next
-            curr.next=new
+            new.next=self.head
+            self.head=new
             self.length+=1
     
     #zero indexed linkList
     def removeAt(self,idx):
         if not self.isEmpty() and idx>=0:
             if idx is 0:
-                temp=self.head.val
-                self.length=0
-                self.head=None
+                self.removeHead()
             else:
                 curr=self.head
                 prev=None
@@ -69,7 +66,6 @@ class LinkList:
         #print('err')
         return -1
         
-    
     def show(self):
         if not self.isEmpty():
             curr=self.head
@@ -79,31 +75,34 @@ class LinkList:
                 else:
                     print(curr.val)
                 curr=curr.next
-        return -1
+        print()
     
-    def removeTail(self):
+    def removeHead(self):
+        head=None
         if not self.isEmpty():
             s=self.length
             if s is 1:
-                temp=self.head.val
+                head=self.head.val
                 self.head=None
                 self.length=0
-                return temp
             else:
-                return self.removeAt(self.length-1)
+                head=self.head.val
+                self.head=self.head.next
+                self.length-=1
+        return head
     
     def isEmpty(self):
         if self.head is None and self.length is 0:
             return True
         return False
-
 '''
 l=LinkList()
 l.add(1)
 l.add(2)
 l.add(3)
-l.removeAt(2)
-l.removeAt(1)
 l.removeAt(0)
+l.show()
+#l.removeAt(1)
+#l.removeAt(0)
 #l.swap(2,0)
 '''

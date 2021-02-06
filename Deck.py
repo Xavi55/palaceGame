@@ -25,7 +25,7 @@ class Deck:
         self.deck.show()
 
     def draw(self):
-        return self.deck.removeTail()
+        return self.deck.removeHead()
 '''
 a=Deck()
 a.shuffle()
