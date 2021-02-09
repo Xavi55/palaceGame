@@ -22,6 +22,7 @@ class Game:
         self.players=[]#arranged by card rank
         self.deck=None
         self.currTurn=0
+        self.sevenflag=None#high or low
 
     def addPlayer(self,p):
         #how many players? -- 2-4?
@@ -77,6 +78,65 @@ class Game:
         #if self.currTurn is 3:
             #self.currTurn=0
 
+    def calcCards(self,prevCard,card,sevenFlag=''):
+        ##returns true from following these rules::
+            #if fourOfAKind
+            #if a seven was previously played
+            #if card is a 7
+            #if a '10' was played
+            #if a '2' was played
+            #if the card played is higher than the previous card
+        value=False
+        if self.isFourofAKind(card):
+            curr=self.currentStack.head
+            while curr != None:
+                self.removedCards.append(self.currentStack.removeHead())
+                curr=curr.next
+            self.removedCards.append(card)
+            value=True
+            #player goes again
+        elif Game.getValue(prevCard) is 7:
+            if self.sevenflag is 'high':
+                value=card > 7
+            else:
+                value=card < 7
+        elif Game.getValue(card) is 7:
+            if self.sevenflag is not None:
+                self.sevenflag=sevenFlag
+            else:
+                print('error')
+            #rotateTurn +1
+        elif Game.getValue(card) is 10:
+            curr=self.currentStack.head
+            while curr != None:
+                self.removedCards.append(self.currentStack.removeHead())
+                curr=curr.next
+            self.removedCards.append(card)
+            value=True
+            #player goes again
+        elif Game.getValue(card) is 2:
+            #player plays again
+            pass
+            print('static')
+        else:
+            value=Game.getValue(card)>Game.getValue(prevCard)
+
+        return value
+    
+    def isFourofAKind(self,card):
+        #look at the previous 3 cards
+        curr=self.currentStack.head
+        value=False
+        count=0
+        while curr != None:
+            if card is curr.val:
+                count+=1
+            if count is 3:
+                value=True
+                break
+            curr=curr.next
+        return value
+
     @staticmethod
     def getValue(card):
         val=0
@@ -86,23 +146,17 @@ class Game:
             try:
                 val=int(card[0])
             except Exception:
+                print('here')
                 val=values[card[0]]
         return val
 
-    def calcCards(prevCard,card):
-        print('static')
-        ##returns true from following these rules::
-            #if the card played is higher than the previous card
-            #if fourOfAKind
-            #if a '10' was played
-            #if card is a 7
-            #if a seven was previously played
-
-        #if prevCard.val
-
 g=Game()
-g.addPlayer('k')
-g.addPlayer('b')
-g.start()
-
-#Game.calcCards(1,2)
+g.currentStack.add('3S')
+g.currentStack.add('3S')
+g.currentStack.add('3S')
+a=g.calcCards(g.currentStack.top(),'8S')
+print(a)
+print(g.removedCards)
+#g.addPlayer('k')
+#g.addPlayer('b')
+#g.start()

@@ -69,12 +69,14 @@ class LinkList:
     def show(self):
         if not self.isEmpty():
             curr=self.head
+            print('head')
             while curr!=None:
                 if curr.val is self.head.val:
-                    print(curr.val,'head')
+                    print(curr.val)
                 else:
                     print(curr.val)
                 curr=curr.next
+            print('tail')
         print()
     
     def removeHead(self):
@@ -90,6 +92,9 @@ class LinkList:
                 self.head=self.head.next
                 self.length-=1
         return head
+    
+    def top(self):
+        return self.head.val
     
     def isEmpty(self):
         if self.head is None and self.length is 0:
