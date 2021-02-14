@@ -74,9 +74,10 @@ class Game:
             #i.hand.show()
 
     def rotateTurn(self):
-        pass
-        #if self.currTurn is 3:
-            #self.currTurn=0
+        if self.currTurn is 3:
+            self.currTurn=0
+        else:
+            self.currTurn+=1
 
     def calcCards(self,prevCard,card,sevenFlag=''):
         ##returns true from following these rules::
@@ -149,14 +150,3 @@ class Game:
                 print('here')
                 val=values[card[0]]
         return val
-
-g=Game()
-g.currentStack.add('3S')
-g.currentStack.add('3S')
-g.currentStack.add('3S')
-a=g.calcCards(g.currentStack.top(),'8S')
-print(a)
-print(g.removedCards)
-#g.addPlayer('k')
-#g.addPlayer('b')
-#g.start()

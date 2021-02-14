@@ -23,3 +23,8 @@ class Player:
 
     def play(self,card):
         return self.hand.removeAt(card)
+    
+    def isReady(self):
+        if self.hiddenStack.length is 3 and self.shownStack is 3 and self.hand.length is 3:
+            return True
+        return False
