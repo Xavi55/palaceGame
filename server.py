@@ -19,14 +19,15 @@ def handle(data):
     room=data['room']
 
     if room in clients:
-        emit('err',{'mess':'room {} already exists'.format(room)})
+        emit('err',{'mess':'room {} already exists'.format(room)})#,room=room)
     else:
         join_room(room)
         clients[room]=Game()#new game
         clients[room].addPlayer(name)
         #clients[room]={'p{}'.format(len(game.players)):name}
-        emit('joined',{'mess':'player joined'})
+        emit('joined',{'mess':'player joined','player':name},room=room)
         status(room)
+        
 @socketio.on('joinRoom')
 def handle(data):
         name=data['name']
@@ -39,10 +40,10 @@ def handle(data):
                 join_room(room)
                 clients[room].addPlayer(name)
                 #clients[room]={'p{}'.format(len(game.players)):name}
-                emit('joined',{'mess':'player joined'})
+                emit('joined',{'mess':'player joined','player':name},room=room)
                 status(room)
         else:
-            emit('err',{'mess':'room {} does not exist'.format(room)})
+            emit('err',{'mess':'room {} does not exist'.format(room)})#,room=room)
 ##########################
 def status(room):
     print('total rooms',clients)

@@ -7,30 +7,68 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/index.css')}}">
     <title>Palace</title>
 </head>
+<style>
+*
+{
+    margin: 0;
+    padding: 0;
+}
+#menu
+{
+    /*width & height needs to be set beforehand*/
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#panel
+{
+    transform: translate(60px, 150px);
+}
+#fields input
+{
+    margin-bottom: 10px;
+}
+.hide
+{
+    display: none;
+}
+</style>
 <body>
-    <div id="menu">
-        <div></div>
-        <div>
-            <input id="room" type="text" maxlength="4" autofocus placeholder="Roomname">
-            <br />
-            <br />
-            <input id="name" type="text" placeholder="Name">
-            <br />
-            <br />
-            <div id='options'>
+<div id="menu">
+        <div id="panel">
+            <div id="fields">
+                <input id="room" type="text" maxlength="4" autofocus placeholder="Roomname">
+                <br />
+                <input id="name" type="text" placeholder="Name">
+            </div>
+            <div id="options">
                 <button onclick="join(1)">Join Game</button>
+                <br />
                 <button onclick="join(2)">Create</button>
             </div>
         </div>
-        <div></div>
     </div>
-    <!--  -->
-    <h3 id="pName">#name</h3>
-    <div id="container">
-        field
-        <div id="foes"></div>
-        <div id="deck"></div>
-        <div id="myHand"></div>
+    <div id="game" class="hide">
+        <h3 id="pName">#name</h3>
+        <div id="foes">
+            <div id="p2">
+
+            </div>
+            <div id="p4">
+
+            </div>
+            <div id="p3">
+                
+            </div>
+        </div>
+        <div id="deck">Deck</div>
+        <div id="p1">
+            <div id="stacks"></div>
+            <div id="myHand"></div>
+        </div>
     </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"
@@ -43,7 +81,9 @@
     var socket = io();
 
     let menu = document.getElementById('menu')
-    let board = document.getElementById('container')
+    let game = document.getElementById('game')
+
+    let pname = document.getElementById('pName')
 
     function join(code)
     {
@@ -71,16 +111,14 @@
 
     socket.on('joined', function (data) 
     {
-        if (menu) 
-        {
-            menu.remove()
-        }
-        console.log(data.mess)
+        console.log(data)
+        menu.remove()
+        game.classList.remove('hide');
+        pname.innerHTML=data.player
     })
 
     socket.on('err', function (data) {
         alert(data.mess)
     })
 </script>
-
 </html>
