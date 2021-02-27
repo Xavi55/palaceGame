@@ -138,6 +138,12 @@ class Game:
             curr=curr.next
         return value
 
+    def searchPlayer(self,name):
+        for p in self.players:
+            if name == p.name:
+                return True
+        return False
+
     @staticmethod
     def getValue(card):
         val=0
@@ -150,3 +156,14 @@ class Game:
                 print('here')
                 val=values[card[0]]
         return val
+
+'''
+g=Game()
+g.addPlayer('k')
+g.addPlayer('b')
+g.currentStack.add('3S')
+g.currentStack.add('3S')
+g.currentStack.add('3S')
+a=g.calcCards(g.currentStack.top(),'3S')
+print(a)
+'''

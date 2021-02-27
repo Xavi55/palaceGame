@@ -36,6 +36,8 @@ def handle(data):
         if room in clients:
             if len(clients[room].players) == 4:
                 emit('err',{'mess':'room {} is full'.format(room)})
+            elif clients[room].searchPlayer(name):
+                emit('err',{'mess':'player name {} already exists in the room'.format(name)})
             else:
                 join_room(room)
                 clients[room].addPlayer(name)
@@ -44,6 +46,10 @@ def handle(data):
                 status(room)
         else:
             emit('err',{'mess':'room {} does not exist'.format(room)})#,room=room)
+
+@socket.io('start')
+def handle(data):
+    console.log(data)
 ##########################
 def status(room):
     print('total rooms',clients)
@@ -51,12 +57,3 @@ def status(room):
 ##########################
 if __name__ == '__main__':
     socketio.run(app,debug=True)
-
-'''
-g=Game()
-g.currentStack.add('3S')
-g.currentStack.add('3S')
-g.currentStack.add('3S')
-a=g.calcCards(g.currentStack.top(),'3S')
-print(a)
-'''
